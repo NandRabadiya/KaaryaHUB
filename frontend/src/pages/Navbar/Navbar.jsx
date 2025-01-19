@@ -13,6 +13,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
+import CreateProjectForm from "../Project/CreateProjectForm";
 
 const Navbar = () => {
   return (
@@ -28,7 +29,7 @@ const Navbar = () => {
             <DialogHeader>
               <DialogTitle>Create New Project</DialogTitle>
             </DialogHeader>
-            Form
+            <CreateProjectForm/>
           </DialogContent>
         </Dialog>
         {/* <Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button> */}

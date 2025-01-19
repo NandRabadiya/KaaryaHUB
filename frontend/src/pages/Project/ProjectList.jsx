@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import ProjectCard from "./ProjectCard";
 
-const tags = [
+export const tags = [
   "all",
   "react",
   "nodejs",
