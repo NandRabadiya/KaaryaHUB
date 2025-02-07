@@ -26,8 +26,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private ChatService chatService;
-    @Autowired
-    private InvitationService inviteTokenService;
 
     @Autowired
     private UserService userService;
