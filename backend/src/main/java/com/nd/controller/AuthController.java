@@ -2,13 +2,12 @@ package com.nd.controller;
 
 import com.nd.config.JwtProvider;
 import com.nd.exception.UserException;
-import com.nd.modal.User;
+import com.nd.model.User;
 import com.nd.repository.UserRepository;
 import com.nd.request.LoginRequest;
 import com.nd.response.AuthResponse;
 
 import com.nd.service.CustomeUserServiceImplementation;
-import jdk.jshell.spi.ExecutionControl;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 

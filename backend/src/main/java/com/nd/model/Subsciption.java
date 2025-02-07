@@ -1,4 +1,4 @@
-package com.nd.modal;
+package com.nd.model;
 
 public class Subsciption {
 }

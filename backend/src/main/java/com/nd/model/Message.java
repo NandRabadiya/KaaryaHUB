@@ -1,5 +1,6 @@
-package com.nd.modal;
+package com.nd.model;
 import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,24 +13,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "messages")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
-
+@NoArgsConstructor
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String content;
 
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
 
     @ManyToOne
-    private Issue issue;
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
 
 }
+

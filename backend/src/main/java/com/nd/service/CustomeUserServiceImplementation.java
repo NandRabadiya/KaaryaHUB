@@ -1,6 +1,6 @@
 package com.nd.service;
 
-import com.nd.modal.User;
+import com.nd.model.User;
 import com.nd.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

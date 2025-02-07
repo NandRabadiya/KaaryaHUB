@@ -1,4 +1,4 @@
-package com.nd.modal;
+package com.nd.model;
 
 import java.util.ArrayList;
 import java.util.List;

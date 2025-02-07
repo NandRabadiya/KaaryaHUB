@@ -1,11 +1,10 @@
-package com.nd.modal;
+package com.nd.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class Issue {
     private String priority;
     private LocalDate dueDate;
 
-    @ElementCollection
+
     private List<String> tags=new ArrayList<>();
 
     @ManyToOne

@@ -1,4 +1,4 @@
-package com.nd.modal;
+package com.nd.model;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Data
@@ -25,7 +24,7 @@ public class Project {
 
     private String category;
 
-    @ElementCollection
+
     private List<String> tags = new ArrayList<String>();
 
     @JsonIgnore
