@@ -2,7 +2,12 @@ package com.nd.controller;
 
 import java.util.List;
 
+import com.nd.exception.MailsException;
+import com.nd.model.Invitation;
+import com.nd.request.ProjectInvitationRequest;
 import com.nd.response.MessageResponse;
+import com.nd.service.InvitationService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +40,10 @@ public class ProjectController {
 
     @Autowired
     private UserService userService;
+
+
+    @Autowired
+    private InvitationService invitationService;
 
 
     @GetMapping
@@ -112,6 +121,31 @@ public class ProjectController {
             throws ProjectException, ChatException {
         Chat chat = projectService.getChatByProjectId(projectId);
         return chat != null ? ResponseEntity.ok(chat) : ResponseEntity.notFound().build();
+    }
+
+
+    @PostMapping("/invite")
+    public ResponseEntity<MessageResponse> inviteToProject(
+            @RequestBody ProjectInvitationRequest req) throws MailsException, MessagingException {
+
+        invitationService.sendInvitation(req.getEmail(), req.getProjectId());
+
+        MessageResponse res=new MessageResponse();
+        res.setMessage("User invited to the project successfully");
+        return ResponseEntity.ok(res);
+
+    }
+
+    @GetMapping("/accept_invitation")
+    public ResponseEntity<Invitation> acceptInvitation(@RequestParam String token,
+                                                       @RequestHeader("Authorization") String jwt) throws Exception {
+
+        User user=userService.findUserProfileByJwt(jwt);
+
+        Invitation invitation = invitationService.acceptInvitation(token,user.getId());
+        projectService.addUserToProject(invitation.getProjectId(),user.getId());
+
+        return new ResponseEntity<>(invitation,HttpStatus.ACCEPTED);
     }
 
 
