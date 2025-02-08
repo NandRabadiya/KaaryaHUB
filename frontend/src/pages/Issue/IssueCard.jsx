@@ -21,7 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const IssueCard = ({item}) => {
   const dispatch=useDispatch();
   // const {id}=useParams()
-  // const navigate=useNavigate();
+   const navigate=useNavigate();
 
   const handleDelete=()=>{
   //  dispatch(deleteIssue(item.id))
@@ -31,7 +31,7 @@ const IssueCard = ({item}) => {
       <CardHeader className="py-0 pb-1">
         <div className="flex justify-between items-center">
           <CardTitle className="cursor-pointer hover:text-gray-300" 
-          // onClick={()=>navigate(`/project/${id}/issue/${item.id}`)}
+           onClick={()=>navigate(`/project/3/issue/10`)}
           >
           ABC
             {/* {item.title} */}
@@ -84,6 +84,7 @@ const IssueCard = ({item}) => {
             </DropdownMenu>
         
         </div>
+
       </CardContent>
     </Card>
   );

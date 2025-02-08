@@ -14,12 +14,16 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 import CreateProjectForm from "../Project/CreateProjectForm";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  
+  const navigate = useNavigate()
+  
   return (
     <div className="border-b  py-4 px-5 flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <p className="cursor-pointer">KaaryaHUB</p>
+        <p onClick={()=>navigate("/")} className="cursor-pointer">KaaryaHUB</p>
         <Dialog>
           <DialogTrigger>
             <Button variant="ghost">New Project</Button>
@@ -32,7 +36,7 @@ const Navbar = () => {
             <CreateProjectForm/>
           </DialogContent>
         </Dialog>
-        {/* <Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button> */}
+        <Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button>
       </div>
 
       <div className="flex gap-3 items-center">
