@@ -1,5 +1,6 @@
-import { Card } from "@/components/ui/card";
+// components/ProjectCard.jsx
 import React from "react";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,65 +9,96 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DotFilledIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
-import { use } from "react";
-
+import { 
+  ExternalLinkIcon,
+  MoreVerticalIcon,
+  PencilIcon,
+  TrashIcon 
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+const ProjectCard = ({ layout = "grid" }) => {
+  const navigate = useNavigate();
 
-
-
-const ProjectCard = () => {
-
-const navigate = useNavigate();
-
+  const tags = ["React", "Node.js", "MongoDB"];
+  
   return (
-    <Card className="p-5 w-full lg:max-w-3xl">
-      <div className="space-y-5">
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <div className="flex items-center gap-5">
-              <h1 
-                 onClick={() => navigate("/project/3")}
-              className="cursor-pointer font-bold text-lg">Create Edu Platform</h1>
-              <DotFilledIcon />
-              <p className="text-sm text-gray-400">FullStack</p>
+    <Card className="group transition-all duration-200 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-primary/5">
+      <CardHeader className="space-y-3">
+        <div className="flex items-start justify-between">
+          <div className="space-y-1">
+            <button
+              onClick={() => navigate("/project/1")}
+              className="flex items-center gap-2 text-lg font-medium hover:text-primary transition-colors"
+            >
+              Project Name
+              <ExternalLinkIcon className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>Full Stack</span>
+              <span>•</span>
+              <Badge variant="secondary" className="rounded-full">
+                In Progress
+              </Badge>
             </div>
-            <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Button className="rounded-full" variant="ghost" size="icon">
-                    <DotsVerticalIcon />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem
-                   // onClick={() => navigate(`/project/update/${item.id}`)}
-                  >
-                    Update
-                  </DropdownMenuItem>
-                  <DropdownMenuItem  // onClick={hnadleDeleteProject}
-                  >Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
           </div>
 
-          
-          <p className="text-gray-500 text-sm">Demo</p>
-        
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <MoreVerticalIcon className="h-4 w-4" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-40">
+              <DropdownMenuItem>
+                <PencilIcon className="h-4 w-4 mr-2" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">
+                <TrashIcon className="h-4 w-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          {[1,1,1,1].map((item) => (
-            <Badge key={item}
-             variant="outline">
-              {item}
-            </Badge>
-          ))}
-        </div>
-      </div>
+      </CardHeader>
+
+      <CardContent>
+        {layout === "grid" ? (
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag, index) => (
+              <Badge 
+                key={index}
+                variant="secondary"
+                className="rounded-full"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag, index) => (
+                <Badge 
+                  key={index}
+                  variant="secondary"
+                  className="rounded-full"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 };
+
 export default ProjectCard;
