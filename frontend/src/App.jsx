@@ -6,12 +6,15 @@ import { Route, Routes } from 'react-router-dom'
 import ProjectDetail from './pages/Project/ProjectDetail'
 import IssueDetails from './pages/Issue/IssueDetails'
 import Subscription from './pages/Subscription/Subscription'
+import { ThemeProvider } from "./components/ui/theme-provider"
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+        <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+
     <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,6 +26,7 @@ function App() {
         <Route path="/upgrade_plan" element={<Subscription />}></Route>
 
       </Routes>
+      </ThemeProvider>
     </>
   )
 }
