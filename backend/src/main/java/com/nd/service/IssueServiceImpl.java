@@ -27,6 +27,11 @@ public class IssueServiceImpl implements IssueService {
     private ProjectService projectService;
 
 
+    @Autowired
+    private NotificationServiceImpl notificationServiceImpl;
+
+
+
     @Override
     public Optional<Issue> getIssueById(Long issueId) throws IssueException {
         Optional<Issue> issue = issueRepository.findById(issueId);
@@ -167,7 +172,21 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Issue addUserToIssue(Long issueId, Long userId) throws UserException, IssueException {
-        return null;
+        User user = userService.findUserById(userId);
+        Optional<Issue> issue=getIssueById(issueId);
+
+        if(issue.isEmpty())throw new IssueException("issue not exist");
+
+        issue.get().setAssignee(user);
+        notifyAssignee(user.getEmail(),"New Issue Assigned To You","New Issue Assign To You");
+        return issueRepository.save(issue.get());
+
+
+    }
+
+    private void notifyAssignee(String email, String subject, String body) {
+        System.out.println("IssueServiceImpl.notifyAssignee()");
+        notificationServiceImpl.sendNotification(email, subject, body);
     }
 
 
