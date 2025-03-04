@@ -1,5 +1,5 @@
 // actions.js
-import * as actionTypes from "./Comment.actionTypes";
+import * as actionTypes from "./comment.actionTypes";
 
 import api from "@/config/api";
 

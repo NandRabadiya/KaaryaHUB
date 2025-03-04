@@ -1,12 +1,25 @@
-import axios from "axios";
-import { API_BASE_URL } from "../../config";
-import { GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_REQUEST } from "./ActionType";
-import Auth from "@/pages/Auth/Auth";
+import axios from 'axios';
+import {
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
+  LOGOUT
+} from './ActionTypes';
+
+
+import { API_BASE_URL } from '../../config/api';
 
 
 export const register=userData=>async (dispatch)=>{
     dispatch({type:REGISTER_REQUEST});
     try {
+     
         const {data}=await axios.post(`${API_BASE_URL}/auth/signup`,userData);
 
         if(data.jwt){
@@ -59,10 +72,10 @@ export const getUser=()=>async (dispatch)=>{
         
         });
 
-        if(data.jwt){
-            localStorage.setItem("jwt",data.jwt);
+        // if(data.jwt){
+        //     localStorage.setItem("jwt",data.jwt);
             dispatch({type:GET_USER_SUCCESS,payload:data});
-        }
+        // }
 
         console.log("register success ",data);
      //   dispatch({type:REGISTER_SUCCESS,payload:response.data});

@@ -15,10 +15,19 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import CreateProjectForm from "../Project/CreateProjectForm";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/Auth/Action";
 
 const Navbar = () => {
-  
+  const {auth
+  } = useSelector((store) => store);
+ 
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   
   return (
     <div className="border-b  py-4 px-5 flex items-center justify-between">
@@ -51,10 +60,10 @@ const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <p className="lg:block hidden">UserName </p>
+        <p className="lg:block hidden">{auth.user?.fullName} </p>
       </div>
     </div>
   );
