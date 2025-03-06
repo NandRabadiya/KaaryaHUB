@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import ProjectCard from "./ProjectCard";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useSelector } from "react-redux";
 
 export const tags = [
   "all", "react", "nodejs", "express", "mongodb", "typescript",
@@ -22,6 +23,7 @@ export const tags = [
 
 const ProjectList = () => {
   const [keyword, setKeyword] = React.useState("");
+  const {project} = useSelector((store) => store);
   const [viewMode, setViewMode] = React.useState("grid");
   
   const handleFilterChange = (section, value) => {
@@ -138,7 +140,7 @@ const ProjectList = () => {
                 ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
                 : "grid-cols-1"
             }`}>
-              {(keyword ? [1, 1, 1] : [1, 1, 1, 1, 1, 1, 1, 1]).map((item, index) => (
+              {keyword ? [1, 1, 1].map((item,index)=><ProjectCard key={index} layout={viewMode}/>) : project.projects.map((item, index) => (
                 <ProjectCard key={index} layout={viewMode} />
               ))}
             </div>

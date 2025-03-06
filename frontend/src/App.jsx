@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from "./redux/Auth/Action";
 import { getUserSubscription } from "./redux/Subscription/Action";
 import Loader from './pages/Loader/Loader'
+import { fetchProjects } from './redux/Project/Project.Action'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
   const { auth } = useSelector((store) => store);
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
+    dispatch(fetchProjects( {category: "all", tag: "all"}));
     dispatch(getUserSubscription(auth.jwt || localStorage.getItem("jwt")))
   }, [auth.jwt]);
 

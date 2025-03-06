@@ -1,6 +1,6 @@
 // actions.js
 import * as actionTypes from "./ActionTypes";
-import api, { API_BASE_URL } from "@/Api/api";
+import api, { API_BASE_URL } from "../../config/api";
 
 // Action for fetching projects
 export const fetchProjects = ({category,tag}) => {
@@ -58,6 +58,7 @@ export const createProject = (projectData) => {
         `${API_BASE_URL}/api/projects`,
         projectData
       );
+      console.log("create project ",response.data)
       dispatch({
         type: actionTypes.CREATE_PROJECT_SUCCESS,
         project: response.data,

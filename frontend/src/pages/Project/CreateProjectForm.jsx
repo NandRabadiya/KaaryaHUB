@@ -20,11 +20,14 @@ import {
 } from "@/components/ui/select";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { DialogClose } from "@/components/ui/dialog";
+import { useDispatch } from "react-redux";
+import { createProject } from "@/redux/Project/Project.Action";
+
 
 
 import { tags } from "./ProjectList";
 function CreateProjectForm() {
-
+const dispatch = useDispatch();
 
     const handleTagsChange = (newValue) => {
         const currentTags = form.getValues("tags");
@@ -50,7 +53,7 @@ function CreateProjectForm() {
 
 
       const onSubmit = (data) => {
-      //  dispatch(createProject(data));
+       dispatch(createProject(data));
         console.log("Create project", data);
       };
 
