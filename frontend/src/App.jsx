@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
     dispatch(fetchProjects( {category: "all", tag: "all"}));
-    dispatch(getUserSubscription(auth.jwt || localStorage.getItem("jwt")))
+  //  dispatch(getUserSubscription(auth.jwt || localStorage.getItem("jwt")))
   }, [auth.jwt]);
 
 
