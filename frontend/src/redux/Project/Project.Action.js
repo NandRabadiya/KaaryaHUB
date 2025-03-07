@@ -4,7 +4,8 @@ import api, { API_BASE_URL } from "../../config/api";
 
 // Action for fetching projects
 export const fetchProjects = ({category,tag}) => {
-  const params = {};
+  const params = {
+  };
   if (category) {
     params.category = category;
   }

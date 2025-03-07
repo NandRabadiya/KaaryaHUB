@@ -49,8 +49,6 @@ public class SubscriptionController {
         return new ResponseEntity<>(upgradedSubscription, HttpStatus.OK);
 
     }
-
-
 }
 
 

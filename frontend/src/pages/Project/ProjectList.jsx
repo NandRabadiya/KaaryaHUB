@@ -1,153 +1,190 @@
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
+import ProjectCard from "./ProjectCard";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import React from "react";
 import {
   MagnifyingGlassIcon,
   MixerHorizontalIcon,
-  ListBulletIcon,
 } from "@radix-ui/react-icons";
-import * as RadixIcons from "@radix-ui/react-icons";
+import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import ProjectCard from "./ProjectCard";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects, searchProjects } from "@/redux/Project/Project.Action";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
-export const tags = [
-  "all", "react", "nodejs", "express", "mongodb", "typescript",
-  "javascript", "css", "html", "tailwindcss", "bootstrap",
-];
+import{ tags} from "./filterData";
+import FilterSheet from "./FilterSheet";
 
 const ProjectList = () => {
-  const [keyword, setKeyword] = React.useState("");
-  const {project} = useSelector((store) => store);
-  const [viewMode, setViewMode] = React.useState("grid");
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const searchParams = new URLSearchParams(location.search);
+  const category = searchParams.get("category");
+  const tag = searchParams.get("tag");
+  const [keyword, setKeyword] = useState("");
+
+  const { project,auth } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(fetchProjects({ category, tag }));
+  }, [category, tag,auth.jwt]);
+
   const handleFilterChange = (section, value) => {
     console.log(value, section);
-  };
 
+    if (value === "all") {
+      searchParams.delete(section);
+    } else {
+      searchParams.set(section, value);
+    }
+    const query = searchParams.toString();
+    navigate({ search: query ? `?${query}` : "" });
+  };
   const handleSearchChange = (e) => {
     setKeyword(e.target.value);
+    if (e.target.value) {
+      dispatch(searchProjects(e.target.value));
+    }
   };
-
-  const FilterContent = () => (
-    <div className="space-y-7">
-      <div>
-        <h2 className="text-lg font-display mb-4">Category</h2>
-        <RadioGroup
-          onValueChange={(value) => handleFilterChange("category", value)}
-          className="space-y-3"
-          defaultValue="all"
-        >
-          {["all", "fullstack", "frontend", "backend"].map((category) => (
-            <div key={category} className="flex items-center space-x-2">
-              <RadioGroupItem value={category} id={`category-${category}`} />
-              <Label htmlFor={`category-${category}`} className="capitalize">
-                {category.replace("_", " ")}
-              </Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </div>
-
-      <div className="pt-4">
-        <h2 className="text-lg font-display mb-4">Tags</h2>
-        <RadioGroup
-          onValueChange={(value) => handleFilterChange("tag", value)}
-          className="space-y-3"
-        >
-          {tags.map((tag) => (
-            <div key={tag} className="flex items-center space-x-2">
-              <RadioGroupItem value={tag} id={`tag-${tag}`} />
-              <Label htmlFor={`tag-${tag}`} className="capitalize">
-                {tag}
-              </Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar for desktop */}
-        <aside className="hidden lg:block w-64 flex-shrink-0">
-          <Card className="sticky top-8 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-display">Filters</h2>
-            <ThemeToggle/>
+    <>
+      <div className="relative px-5 lg:px-0 lg:flex gap-5 justify-center py-5">
+        <section className="hidden lg:block">
+          <Card className="p-5 sticky top-10">
+            <div className="flex justify-between lg:w-[20rem]">
+              <p className="text-xl tracking-wider">filters</p>
+              <Button variant="ghost" size="icon">
+                <MixerHorizontalIcon />
+              </Button>
             </div>
-            <ScrollArea className="h-[calc(100vh-12rem)]">
-              <FilterContent />
-            </ScrollArea>
+
+            <CardContent className="mt-5 ">
+              <ScrollArea className="space-y-7 h-[70vh]">
+                <div>
+                  <h1 className="pb-3 text-gray-400 border-b">Category</h1>
+                  <div className="pt-5">
+                    <RadioGroup
+                      onValueChange={(value) =>
+                        handleFilterChange("category", value)
+                      }
+                      className="space-y-3"
+                      defaultValue={category || "all"}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="all" id="r1" />
+                        <Label htmlFor="r1">all</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="fullstack" id="r1" />
+                        <Label htmlFor="r1">full stack</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="frontend" id="r2" />
+                        <Label htmlFor="r2">frontend</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="backend" id="r3" />
+                        <Label htmlFor="r3">backend</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+
+                <div className="pt-9">
+                  <h1 className="pb-3 text-gray-400 border-b">Tags</h1>
+
+                  <RadioGroup
+                    onValueChange={(value) => handleFilterChange("tag", value)}
+                    className="space-y-3 pt-5"
+                    defaultValue={tag || "all"}
+                  >
+                    {tags.map((item) => (
+                      <div key={item} className="flex items-center space-x-2">
+                        <RadioGroupItem value={item} id={`r-${item}`} />
+                        <Label htmlFor={`r-${item}`}>{item}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              </ScrollArea>
+            </CardContent>
           </Card>
-        </aside>
+        </section>
 
-        {/* Main content */}
-        <main className="flex-1">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <div className="relative flex-1">
-                <Input
-                  onChange={handleSearchChange}
-                  placeholder="Search projects..."
-                  className="pl-10"
-                />
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "outline"}
-                  size="icon"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <RadixIcons.LayoutIcon className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "outline"}
-                  size="icon"
-                  onClick={() => setViewMode("list")}
-                >
-                  <ListBulletIcon className="h-4 w-4" />
-                </Button>
-                
-                {/* Mobile filter button */}
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline" className="lg:hidden">
-                      <MixerHorizontalIcon className="h-4 w-4 mr-2" />
-                      Filters
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <ScrollArea className="h-[calc(100vh-4rem)]">
-                      <FilterContent />
-                    </ScrollArea>
-                  </SheetContent>
-                </Sheet>
-              </div>
+        <section className="w-full lg:w-[48rem]">
+          <div className="flex gap-2 items-center pb-5 justify-between">
+            <div className="relative p-0 w-full">
+              <Input
+                className="w-[40%] rounded-fulls px-9"
+                placeholder="search project..."
+                onChange={handleSearchChange}
+              />
+              <MagnifyingGlassIcon className="absolute top-3 left-4" />
             </div>
 
-            <div className={`grid gap-6 ${
-              viewMode === "grid" 
-                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
-                : "grid-cols-1"
-            }`}>
-              {keyword ? [1, 1, 1].map((item,index)=><ProjectCard key={index} layout={viewMode}/>) : project.projects.map((item, index) => (
-                <ProjectCard key={index} layout={viewMode} />
-              ))}
-            </div>
+            <Sheet className=" lg:hidden">
+              <SheetTrigger>
+                <Button className="" variant="ghost" size="icon">
+                  <MixerHorizontalIcon />
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <FilterSheet />
+              </SheetContent>
+            </Sheet>
           </div>
-        </main>
+          <div>
+            <div className="space-y-5 min-h-[74vh]">
+              {keyword
+                ? project.searchProjects.map((item) => (
+                    <ProjectCard item={item} key={item.id} />
+                  ))
+                : project.projects.map((item) => (
+                    <ProjectCard item={item} key={item.id} />
+                  ))}
+            </div>
+            {project.projects.length > 0 ? (
+              <div>
+                {/* <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious href="#" />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#" isActive>
+                      2
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext href="#" />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination> */}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[80vh]">
+                <h1>No projects...</h1>
+              </div>
+            )}
+          </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 };
 
