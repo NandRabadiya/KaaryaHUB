@@ -11,8 +11,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-//import { useDispatch } from "react-redux";
-//import { createIssue } from "@/redux/Issue/Issue.action";
+import { useDispatch } from "react-redux";
+import { createIssue } from "@/redux/Issue/Issue.action";
 import { useParams } from "react-router-dom";
 import { DialogClose } from "@/components/ui/dialog";
 
@@ -26,11 +26,11 @@ const formSchema = z.object({
 });
 
 export function CreateIssueForm({ status }) {
- // const dispatch = useDispatch();
-  // const { id } = useParams();
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
   const form = useForm({
-  //  resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       issueName: "",
       description: "",
@@ -48,6 +48,7 @@ export function CreateIssueForm({ status }) {
         description: data.description,
       })
     );
+    console.log("sent invitation", data);
   };
 
   return (
@@ -85,5 +86,3 @@ export function CreateIssueForm({ status }) {
     </Form>
   );
 }
-
-export default CreateIssueForm;

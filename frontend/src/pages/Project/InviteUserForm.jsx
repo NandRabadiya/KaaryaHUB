@@ -1,70 +1,74 @@
-import { DialogClose } from '@/components/ui/dialog';
-import { Form } from '@/components/ui/form';
 import { Input } from "@/components/ui/input";
-
+// import "./Login.css";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/Auth/Action";
+import { inviteToProject } from "@/redux/Project/Project.Action";
 
-import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-
-import React from 'react'
-import { useForm } from 'react-hook-form';
-
-const InviteUserForm = () => 
-{
-  
-  
-    
-    const form = useForm({
-          //  resolver: zodResolver(formSchema),
-            defaultValues: {
-              email: "",
-        
-            },
-          });
-    
-    
-          const onSubmit = (data) => {
-          //  dispatch(createProject(data));
-            console.log("Create project", data);
-          };
-  
-  
-    return (
-    <div>
-
-        <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} 
-        className="space-y-4">
-          <FormField
-          control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="text"
-                    className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="User Email..."
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <DialogClose>
-           
-              <Button type="submit" className="w-full  py-5">
-                Invite User
-              </Button>
-        
-          </DialogClose>
-        </form>
-      </Form>
-
+const formSchema = z.object({
+  email: z.string().email('Invalid email address'),
+ 
+});
+const InviteUserForm = ({projectId}) => {
+  const dispatch=useDispatch();
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
       
-    </div>
-  )
-}
+    },
+  });
+  const onSubmit = (data) => {
+    data.projectId=projectId
+    dispatch(inviteToProject(data))
+    
+    console.log("sent invitation", data);
 
-export default InviteUserForm
+  };
+  return (
+    <div>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="border w-full border-gray-700 py-5 px-5"
+                          placeholder="enter user email"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <Button type="submit" className="w-full bg-slate-400 py-5">
+                  SENT INVITATION
+                </Button>
+              </form>
+            </Form>
+
+         
+          </div>
+  );
+};
+
+export default InviteUserForm;
