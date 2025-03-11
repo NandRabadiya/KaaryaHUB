@@ -13,14 +13,21 @@ import { Badge } from "@/components/ui/badge";
 import Loader from "../Loader/Loader";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import InviteUserForm from "./InviteUserForm";
 import IssueList from "../Issue/IssueList";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { project,auth } = useSelector((store) => store);
+  const { project, auth } = useSelector((store) => store);
   useEffect(() => {
     dispatch(fetchProjectById(id));
   }, [id]);
@@ -52,35 +59,40 @@ const ProjectDetails = () => {
                     <div className="flex items-center gap-2">
                       {project.projectDetails?.team.map((item) => (
                         <Avatar className={`cursor-pointer`} key={item}>
-                          <AvatarFallback>{item.fullName[0]?.toUpperCase()}</AvatarFallback>
+                          <AvatarFallback>
+                            {" "}
+                            {item?.fullName
+                              ? item.fullName[0]?.toUpperCase()
+                              : "?"}
+                          </AvatarFallback>
                         </Avatar>
                       ))}
                     </div>
 
-                   {auth.user?.id===project.projectDetails?.owner.id && <Dialog>
-                      <DialogTrigger>
-                      <DialogClose>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="ml-2"
-                          onClick={handleProjectInvitation}
-                        >
-                          {" "}
-                          <span className="pr-1">invite</span>
-                          <PlusIcon className="w-3 h-3" />
-                        </Button>
-                      </DialogClose>
-                        
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Invite User</DialogTitle>
-                         
-                        </DialogHeader>
-                        <InviteUserForm projectId={id}/>
-                      </DialogContent>
-                    </Dialog>}
+                    {auth.user?.id === project.projectDetails?.owner.id && (
+                      <Dialog>
+                        <DialogTrigger>
+                          <DialogClose>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="ml-2"
+                              onClick={handleProjectInvitation}
+                            >
+                              {" "}
+                              <span className="pr-1">invite</span>
+                              <PlusIcon className="w-3 h-3" />
+                            </Button>
+                          </DialogClose>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Invite User</DialogTitle>
+                          </DialogHeader>
+                          <InviteUserForm projectId={id} />
+                        </DialogContent>
+                      </Dialog>
+                    )}
                   </div>
                   <div className="flex">
                     <p className="w-36">Category : </p>

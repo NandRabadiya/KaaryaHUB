@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-//import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -7,23 +7,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDispatch } from "react-redux";
-//import { CreateCommentForm } from "./CreateCommentForm";
+
+import { CreateCommentForm } from "./CreateCommentForm";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-//import CommentCard from "./CommentCard";
+import CommentCard from "./CommentCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-//import { fetchIssueById, updateIssueStatus } from "../../redux/Issue/Issue.action";
+import { fetchIssueById, updateIssueStatus } from "@/redux/Issue/Issue.action";
 import { useParams } from "react-router-dom";
-//import { fetchComments } from "@/redux/Comment/comment.action";
+import { fetchComments } from "@/redux/Comment/comment.action";
 import { Badge } from "@/components/ui/badge";
 
 const comments = [1, 1, 1];
 
 const IssueDetails = () => {
   const { issueId } = useParams();
- // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { issue, comment } = useSelector((store) => store);
 
   useEffect(() => {

@@ -92,6 +92,7 @@ export const createIssue = (issueData) => {
         type: actionTypes.CREATE_ISSUE_SUCCESS,
         issue: response.data,
       });
+      console.log("create issue success", response.data);
     } catch (error) {
       dispatch({
         type: actionTypes.CREATE_ISSUE_FAILURE,
