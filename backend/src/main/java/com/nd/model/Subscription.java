@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 public class Subscription {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private LocalDate subscriptionStartDate;
@@ -27,6 +27,7 @@ public class Subscription {
     private boolean isValid;
 
     @OneToOne
+    @JsonIgnore
     private User user;
 
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -32,6 +32,7 @@ public class Project {
     private Chat chat;
 
     @ManyToOne
+    @JsonIgnore
     private User owner;
 
     @JsonIgnore

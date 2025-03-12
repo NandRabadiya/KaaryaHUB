@@ -1,13 +1,13 @@
 import * as types from "./actionTypes";
 import api from "@/config/api";
 
-export const getUserSubscription = (jwt) => {
+export const getUserSubscription = () => {
   return async (dispatch) => {
     dispatch({ type: types.GET_USER_SUBSCRIPTION_REQUEST });
     try {
       const response = await api.get("/api/subscriptions/user",{
         headers:{
-          "Authorization":`Bearer ${jwt}`
+          "Authorization":`Bearer ${localStorage.getItem("jwt")}`
         }
       });
       dispatch({

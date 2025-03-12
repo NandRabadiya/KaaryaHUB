@@ -25,7 +25,7 @@ public class SubscriptionController {
     @Autowired
     private UserService userService;
 
-
+ 
 
     @GetMapping("/user")
     public ResponseEntity<Subscription> getUserSubscription(

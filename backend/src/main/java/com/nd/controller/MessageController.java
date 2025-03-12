@@ -52,7 +52,7 @@ public class MessageController {
         return ResponseEntity.ok(sentMessage);
     }
 
-    @GetMapping("/chat/{projectId}")
+    @GetMapping("/chat/{projectId}")    
     public ResponseEntity<List<Message>> getMessagesByChatId(@PathVariable Long projectId)
             throws ProjectException, ChatException {
         List<Message> messages = messageService.getMessagesByProjectId(projectId);

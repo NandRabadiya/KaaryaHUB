@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String fullName;
@@ -38,10 +38,10 @@ public class User {
 
     private int projectSize=0;
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "team")
-//    private List<Project> projects = new ArrayList<>();
-//
+    @JsonIgnore
+    @ManyToMany(mappedBy = "team")
+    private List<Project> projects = new ArrayList<>();
+
 
 
     public Long getId() {
@@ -98,5 +98,8 @@ public class User {
 
     public void setProjectSize(int projectSize) {
         this.projectSize = projectSize;
+
     }
+
+
 }
