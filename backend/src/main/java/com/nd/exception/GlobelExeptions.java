@@ -19,11 +19,11 @@ public class GlobelExeptions {
 		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetais> otherEceptionHandler(Exception ue,
-			WebRequest req){
-		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
-		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
-	}
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<ErrorDetais> otherEceptionHandler(Exception ue,
+//			WebRequest req){
+//		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+//		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
+//	}
 
 }
