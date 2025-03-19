@@ -33,9 +33,6 @@ const FilterSheet = () => {
         <div className="p-5 sticky top-10">
             <div className="flex justify-between lg:w-[20rem]">
               <p className="text-xl tracking-wider">filters</p>
-              <Button variant="ghost" size="icon">
-                <MixerHorizontalIcon />
-              </Button>
             </div>
 
             <CardContent className="mt-5 ">
