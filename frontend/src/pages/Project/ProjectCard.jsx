@@ -1,102 +1,79 @@
-// components/ProjectCard.jsx
-import React from "react";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { 
-  ExternalLinkIcon,
-  MoreVerticalIcon,
-  PencilIcon,
-  TrashIcon 
-} from "lucide-react";
+import { DotFilledIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteProject } from "@/redux/Project/Project.Action";
 
-const ProjectCard = ({ layout = "grid" }) => {
+const ProjectCard = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch=useDispatch();
 
-  const tags = ["React", "Node.js", "MongoDB"];
-  
+  const hnadleDeleteProject=()=>{
+    dispatch(deleteProject({projectId:item.id}))
+  }
+
   return (
-    <Card className="group transition-all duration-200 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-primary/5">
-      <CardHeader className="space-y-3">
-        <div className="flex items-start justify-between">
-          <div className="space-y-1">
-            <button
-              onClick={() => navigate("/project/1")}
-              className="flex items-center gap-2 text-lg font-medium hover:text-primary transition-colors"
-            >
-              Project Name
-              <ExternalLinkIcon className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>Full Stack</span>
-              <span>•</span>
-              <Badge variant="secondary" className="rounded-full">
-                In Progress
-              </Badge>
+    <Card className="p-5 w-full lg:max-w-3xl">
+      <div className="space-y-5">
+        <div className="space-y-2">
+          <div className="flex justify-between">
+            <div className="flex items-center gap-5">
+              <h1
+                onClick={() => navigate(`/project/${item.id}`)}
+                className=" cursor-pointer font-bold text-lg "
+              >
+                {item.name}
+              </h1>
+              <DotFilledIcon />
+              <p className="text-sm text-gray-400">{item.category}</p>
+            </div>
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button className="rounded-full" variant="ghost" size="icon">
+                    <DotsVerticalIcon />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => navigate(`/project/update/${item.id}`)}
+                  >
+                    Update
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={hnadleDeleteProject}>Delete</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <MoreVerticalIcon className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem>
-                <PencilIcon className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive">
-                <TrashIcon className="h-4 w-4 mr-2" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <p className="text-gray-500 text-sm">{item.description}</p>
         </div>
-      </CardHeader>
 
-      <CardContent>
-        {layout === "grid" ? (
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
-              <Badge 
-                key={index}
-                variant="secondary"
-                className="rounded-full"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        ) : (
-          <div className="flex items-center gap-4">
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag, index) => (
-                <Badge 
-                  key={index}
-                  variant="secondary"
-                  className="rounded-full"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
-      </CardContent>
+        <div className="flex flex-wrap gap-2 items-center">
+          {item.tags.map((tag) => (
+            <Badge key={item} variant="outline">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
     </Card>
   );
 };
