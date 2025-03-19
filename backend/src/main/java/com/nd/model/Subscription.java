@@ -5,6 +5,8 @@ import com.nd.domain.PlanType;
 import com.nd.domain.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Subscription {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private LocalDate subscriptionStartDate;
@@ -27,6 +29,9 @@ public class Subscription {
     private boolean isValid;
 
     @OneToOne
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
 }

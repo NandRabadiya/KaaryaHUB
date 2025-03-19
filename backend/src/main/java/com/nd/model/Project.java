@@ -8,14 +8,25 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "project_seq",
+            sequenceName = "project_seq",
+            allocationSize = 1,
+            initialValue = 1001
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
     private Long id;
 
     private String name;
@@ -29,9 +40,11 @@ public class Project {
 
     @JsonIgnore
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
     private Chat chat;
 
     @ManyToOne
+    @JsonIgnore
     private User owner;
 
     @JsonIgnore
@@ -40,7 +53,16 @@ public class Project {
 
 
     @ManyToMany
+    @ToString.Exclude
     private List<User> team = new ArrayList<>();
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "project_team",
+//            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
+//    )
+//    private List<User> team = new ArrayList<>();
 
 
 }

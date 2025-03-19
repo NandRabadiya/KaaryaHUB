@@ -14,6 +14,7 @@ import {
 
 
 import { API_BASE_URL } from '../../config/api';
+import { data } from 'react-router-dom';
 
 
 export const register=userData=>async (dispatch)=>{
@@ -31,9 +32,10 @@ export const register=userData=>async (dispatch)=>{
      //   dispatch({type:REGISTER_SUCCESS,payload:response.data});
        // dispatch(loadUser());
     } catch (error) {
-      //  dispatch({type:REGISTER_FAILURE,payload:error.response.data});
+        dispatch({type: REGISTER_FAILURE, payload: error.response?.data?.error || "Registration failed"});
     
         console.log("register error ",error);
+        console.log("register error message ",error.response.data.error);
     
     }
 }
@@ -54,9 +56,11 @@ export const login=userData=>async (dispatch)=>{
      //   dispatch({type:REGISTER_SUCCESS,payload:response.data});
        // dispatch(loadUser());
     } catch (error) {
-      //  dispatch({type:REGISTER_FAILURE,payload:error.response.data});
+        dispatch({type: LOGIN_FAILURE, payload: error.response?.data?.error || "Login failed"});
     
         console.log("Login error ",error);
+        console.log("login error message ",error.response.data.error);
+
     
     }
 }

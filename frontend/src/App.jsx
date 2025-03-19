@@ -14,6 +14,7 @@ import { getUserSubscription } from "./redux/Subscription/Action";
 import Loader from './pages/Loader/Loader'
 import { fetchProjects } from './redux/Project/Project.Action'
 import UpgradeSuccess from './pages/Subscription/UpgradeSuccess'
+import AcceptInvitation from './pages/Project/AcceptInvitation'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -49,7 +50,10 @@ function App() {
             ></Route>
         <Route path="/upgrade_plan" element={<Subscription />}></Route>
         <Route path="/upgrade_plan/success" element={<UpgradeSuccess />}></Route>
-         
+        <Route
+              path="/accept_invitation"
+              element={<AcceptInvitation />}
+            ></Route>
 
       </Routes>
 
