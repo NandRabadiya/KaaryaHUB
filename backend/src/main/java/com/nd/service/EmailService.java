@@ -34,6 +34,7 @@ public class EmailService {
         message.setSubject(subject);
         message.setText(text);
         message.setTo(userEmail);
+        message.setFrom("collegedealzz@gmail.com");
 
         try {
             javaMailSender.send(message);

@@ -25,9 +25,13 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ChatService chatService;
 
     @Override
     public Message sendMessage(Long senderId, Long projectId, String content) throws UserException, ChatException, ProjectException {
@@ -49,7 +53,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getMessagesByProjectId(Long projectId) throws ProjectException, ChatException {
-        Chat chat = projectService.getChatByProjectId(projectId);
+
+       //This is the chat id and not proejct id.
+        Chat chat = chatRepository.getById(projectId);
         List<Message> findByChatIdOrderByCreatedAtAsc = messageRepository.findByChatIdOrderByCreatedAtAsc(chat.getId());
         return findByChatIdOrderByCreatedAtAsc;
     }

@@ -26,6 +26,7 @@ public class Message {
 
     private LocalDateTime createdAt;
 
+
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
