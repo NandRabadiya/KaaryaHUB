@@ -2,6 +2,9 @@ package com.nd.controller;
 
 import java.util.List;
 
+import com.nd.Dto.IssueDTO;
+import com.nd.Dto.ProjectDTO;
+import com.nd.Dto.UserDTO;
 import com.nd.exception.MailsException;
 import com.nd.model.Invitation;
 import com.nd.request.ProjectInvitationRequest;
@@ -55,13 +58,24 @@ public class ProjectController {
         List<Project> projects = projectService.getProjectsByTeam(user,category,tag);
         return new ResponseEntity<>(projects, HttpStatus.OK);
     }
-
     @GetMapping("/{projectId}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Long projectId) throws ProjectException {
+    public ResponseEntity<ProjectDTO> getProject(@PathVariable Long projectId) throws ProjectException {
         Project project = projectService.getProjectById(projectId);
-        return project != null ?
-                new ResponseEntity<>(project, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        ProjectDTO projectDTO = new ProjectDTO(
+                project.getId(),
+                project.getName(),
+                project.getDescription(),
+                project.getCategory(),
+                project.getTags(),
+                new UserDTO(project.getOwner().getId(), project.getOwner().getFullName()),
+                project.getTeam().stream().map(user -> new UserDTO(user.getId(), user.getFullName())).toList(),
+                project.getIssues().stream().map(issue -> new IssueDTO(issue.getId(), issue.getTitle(), issue.getStatus())).toList(),
+                project.getChat() != null ? project.getChat().getId() : null,
+                "In Progress"
+        );
+
+        return ResponseEntity.ok(projectDTO);
     }
 
     @PostMapping

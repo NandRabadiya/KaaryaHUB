@@ -54,18 +54,27 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         Subscription subscription = subscriptionRepository.findByUserId(userId);
 
         subscription.setSubscriptiontype(SubscriptionType.PAID);
-
         subscription.setPlanType(planType);
-        subscription.setSubscriptionStartDate(LocalDate.now());
         subscription.setValid(true);
-        if(planType.equals(PlanType.ANNUALLY)){
-            subscription.setSubscriptionEndDate(LocalDate.now().plusMonths(12));
+
+        LocalDate now = LocalDate.now();
+        // Use current expiration if it's still in the future; otherwise, start from today.
+        LocalDate baseDate = (subscription.getSubscriptionEndDate() != null &&
+                subscription.getSubscriptionEndDate().isAfter(now))
+                ? subscription.getSubscriptionEndDate()
+                : now;
+
+         subscription.setSubscriptionStartDate(now);
+
+        if (planType.equals(PlanType.ANNUALLY)) {
+            subscription.setSubscriptionEndDate(baseDate.plusMonths(12));
+        } else {
+            subscription.setSubscriptionEndDate(baseDate.plusMonths(1));
         }
-        else {
-            subscription.setSubscriptionEndDate(LocalDate.now().plusMonths(1));
-        }
+
         return subscriptionRepository.save(subscription);
     }
+
 
     @Override
     public boolean isValid(Subscription subscription) {
