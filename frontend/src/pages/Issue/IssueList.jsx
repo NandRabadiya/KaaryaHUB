@@ -39,10 +39,10 @@ export function IssueList({ title, status }) {
   return (
     <div>
       <Dialog>
-        <Card className="w-full md:w-[300px] lg:w-[310px] ">
-          <CardHeader className="">
-            <CardTitle>{title}</CardTitle>
-          </CardHeader>
+      <Card className="w-full md:w-[300px] lg:w-[310px] bg-card border-border">
+      <CardHeader className="">
+      <CardTitle className="text-foreground">{title}</CardTitle>
+      </CardHeader>
           <CardContent className="px-2">
             <div className="space-y-2">
               {issue.issues.filter((item)=>item.status==status).map((item) => (
@@ -53,17 +53,17 @@ export function IssueList({ title, status }) {
           <CardFooter className="px-2">
             <DialogTrigger>
               <Button
-                className="w-full border flex items-center gap-2"
-                variant="outline"
+                  className="w-full border border-border flex items-center gap-2 text-primary hover:bg-secondary hover:text-primary"
+                  variant="outline"
               >
                 <PlusIcon /> <span>Create Issue</span>
               </Button>
             </DialogTrigger>
           </CardFooter>
         </Card>
-        <DialogContent className="border-none w-[300px]">
+        <DialogContent className="border-none w-[300px] bg-card">
           <DialogHeader>
-            <DialogTitle>Create New Issue</DialogTitle>
+          <DialogTitle className="text-foreground">Create New Issue</DialogTitle>
           </DialogHeader>
           <CreateIssueForm status={status} />
         </DialogContent>

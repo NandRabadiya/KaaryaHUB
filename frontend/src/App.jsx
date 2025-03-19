@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-        <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="ui-theme">
 
 
         {/* {auth.loading?<Loader/> : */}

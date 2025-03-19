@@ -36,17 +36,17 @@ const IssueDetails = () => {
   };
 
   return (
-    <div className="px-20 py-8 text-gray-400">
-      <div className="flex justify-between border p-10 rounded-lg">
-        <ScrollArea className="h-[80vh] w-[60%] ">
+    <div className="px-20 py-8 text-foreground/70">
+      <div className="flex justify-between border border-border p-10 rounded-lg bg-card">
+        <ScrollArea className="h-[70vh] w-[60%] ">
           <div className="">
-            <h1 className="text-lg font-semibold text-gray-400">
+            <h1 className="text-lg font-semibold text-foreground">
               {issue.issueDetails?.title}
             </h1>
 
             <div className="py-5">
-              <h2 className="font-semibold text-gray-400">Description</h2>
-              <p className="text-gray-400 text-sm mt-3">
+              <h2 className="font-semibold text-foreground/80">Description</h2>
+              <p className="text-foreground/70 text-sm mt-3">
                 {issue.issueDetails?.description}
               </p>
             </div>
@@ -54,10 +54,10 @@ const IssueDetails = () => {
               <h1 className="pb-3">Activity</h1>
               <Tabs defaultValue="comments" className="w-[400px]">
                 <TabsList className="mb-5">
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="comments">Comments</TabsTrigger>
-                  <TabsTrigger value="history">History</TabsTrigger>
-                </TabsList>
+                <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">All</TabsTrigger>
+                    <TabsTrigger value="comments" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Comments</TabsTrigger>
+                    <TabsTrigger value="history" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">History</TabsTrigger>
+                   </TabsList>
                 <TabsContent value="all">
                   all Make changes to your account here.
                 </TabsContent>
@@ -79,8 +79,8 @@ const IssueDetails = () => {
 
         <div className="w-full lg:w-[30%] space-y-2">
           <Select onValueChange={handleUpdateIssueStatus}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={"To Do"} />
+          <SelectTrigger className="w-[180px] border-border bg-background text-foreground">
+          <SelectValue placeholder={"To Do"} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">To Do</SelectItem>
@@ -89,8 +89,8 @@ const IssueDetails = () => {
             </SelectContent>
           </Select>
 
-          <div className="border rounded-lg">
-            <p className="border-b py-3 px-5">Details</p>
+          <div className="border border-border rounded-lg bg-card">
+              <p className="border-b border-border py-3 px-5">Details</p>
 
             <div className="p-5">
               <div className="space-y-7">
@@ -98,7 +98,7 @@ const IssueDetails = () => {
                   <p className="w-[7rem]">Assignee</p>
                   {issue.issueDetails?.assignee ? (
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-8 w-8 text-xs">
+                        <Avatar className="h-8 w-8 text-xs bg-secondary text-foreground">
                         <AvatarFallback>A</AvatarFallback>
                       </Avatar>
                       <p>{issue.issueDetails?.assignee?.fullName}</p>
@@ -134,7 +134,7 @@ const IssueDetails = () => {
                   <p className="w-[7rem]">Reporter</p>
                   {issue.issueDetails?.assignee ? (
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-8 w-8 text-xs">
+                        <Avatar className="h-8 w-8 text-xs bg-secondary text-foreground">
                         <AvatarFallback>A</AvatarFallback>
                       </Avatar>
                       <p>Ashok</p>

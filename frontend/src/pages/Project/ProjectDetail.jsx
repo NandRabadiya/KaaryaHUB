@@ -41,7 +41,7 @@ const ProjectDetails = () => {
         <div className="mt-5 lg:px-10 ">
           <div className="lg:flex gap-5 justify-between pb-4">
             <ScrollArea className="h-screen lg:w-[69%] pr-2">
-              <div className="text-gray-400 pb-10 w-full">
+              <div className="text-foreground pb-10 w-full">
                 <h1 className="text-lg font-semibold pb-5">
                   {project.projectDetails?.name}
                 </h1>
@@ -76,7 +76,7 @@ const ProjectDetails = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="ml-2"
+                              className="ml-2  text-primary border-border hover:bg-secondary-foreground hover:text-secondary"
                               onClick={handleProjectInvitation}
                             >
                               {" "}
@@ -109,7 +109,7 @@ const ProjectDetails = () => {
                 </div>
 
                 <section>
-                  <p className="py-5 border-b text-lg tracking-wider">Tasks</p>
+                  <p className="py-5 border-b border-border text-lg tracking-wider">Tasks</p>
                   <div className="lg:flex md:flex gap-3 justify-between py-5">
                     <IssueList status="pending" title={"Todo List"} />
 

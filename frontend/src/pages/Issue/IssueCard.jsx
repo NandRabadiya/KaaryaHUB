@@ -66,7 +66,7 @@ const IssueCard = ({ item }) => {
                 size="icon"
               >
                 <Avatar>
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-secondary">
                     {item.assignee?.fullName[0].toUpperCase() || <PersonIcon />}
                   </AvatarFallback>
                 </Avatar>
