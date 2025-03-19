@@ -19,7 +19,7 @@ const Auth = () => {
               <Button 
                 onClick={() => setActive(!active)} 
                 variant="ghost" 
-                className="text-secondary hover:text-primary/80 font-medium p-2"
+                className="text-secondary-foreground hover:text-secondary font-medium p-2"
               >
                 {active ? (
                   <span className="flex items-center gap-1"><LogIn className="w-4 h-4" /> Sign In</span>

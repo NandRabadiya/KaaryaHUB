@@ -55,7 +55,7 @@ const SignupForm = () => {
                   <Input
                     {...field}
                     type="text"
-                    className="border text-secondary w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
+                    className="border text-primary-foreground w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
                     placeholder="Your full name"
                   />
                 </FormControl>
@@ -71,7 +71,7 @@ const SignupForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className="border text-secondary w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
+                    className="border text-blue-900 w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
                     placeholder="Your email address"
                   />
                 </FormControl>
@@ -88,7 +88,7 @@ const SignupForm = () => {
                   <Input
                     {...field}
                     type="password"
-                    className="border text-secondary w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
+                    className="border text-blue-900 w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
                     placeholder="Create a password"
                   />
                 </FormControl>
