@@ -11,7 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "@/redux/Auth/Action";
 
 const formSchema = z.object({
@@ -25,6 +25,8 @@ const formSchema = z.object({
 
 const SignupForm = () => {
   const dispatch=useDispatch();
+  const { error } = useSelector((state) => state.auth); // Add this line
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -100,6 +102,9 @@ const SignupForm = () => {
           >
             <UserPlus className="w-4 h-4 mr-2" /> Create Account
           </Button>
+          {error && (
+  <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
+)}
         </form>
       </Form>
     </div>
