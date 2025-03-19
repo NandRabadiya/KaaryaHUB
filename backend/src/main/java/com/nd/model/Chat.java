@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "chats")
@@ -24,6 +25,7 @@ public class Chat {
 
     @OneToOne
     @JoinColumn(name = "project_id")
+    @ToString.Exclude
     private Project project;
 
     @JsonIgnore

@@ -5,6 +5,8 @@ import com.nd.domain.PlanType;
 import com.nd.domain.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -28,6 +30,8 @@ public class Subscription {
 
     @OneToOne
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
 }

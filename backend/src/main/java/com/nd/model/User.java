@@ -1,15 +1,16 @@
 package com.nd.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nd.domain.PlanType;
+import com.nd.domain.SubscriptionType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -17,9 +18,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "user_seq",
+            sequenceName = "user_seq",
+            allocationSize = 1,
+            initialValue = 1001
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     private Long id;
+
 
     private String fullName;
     private String email;
@@ -33,16 +45,35 @@ public class User {
     private List<Issue> assignedIssues = new ArrayList<>();
 
 
-//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//	private Subscription subscription;
+    @ToString.Exclude
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+	private Subscription subscription;
 
     private int projectSize=0;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "team")
+    @ToString.Exclude
     private List<Project> projects = new ArrayList<>();
 
 
+    @PrePersist
+    public void prePersist() {
+        if (this.subscription == null) {
+            Subscription sub = new Subscription();
+            sub.setSubscriptionStartDate(LocalDate.now());
+            // Set an end date as needed, here for example 1 month from now.
+            sub.setSubscriptionEndDate(LocalDate.now().plusMonths(1));
+            sub.setSubscriptiontype(SubscriptionType.FREE);
+            sub.setPlanType(PlanType.FREE);
+            sub.setValid(true);
+            // Set the bi-directional relationship
+            sub.setUser(this);
+            this.subscription = sub;
+        }
+    }
 
     public Long getId() {
         return id;
