@@ -64,12 +64,15 @@ export const createProject = (projectData) => {
         type: actionTypes.CREATE_PROJECT_SUCCESS,
         project: response.data,
       });
+      window.location.reload();
     } catch (error) {
       console.log("catch error ",error)
       dispatch({
         type: actionTypes.CREATE_PROJECT_FAILURE,
         error: error.message,
       });
+      window.location.reload();
+
     }
   };
 };
