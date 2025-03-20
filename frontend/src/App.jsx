@@ -15,6 +15,7 @@ import Loader from './pages/Loader/Loader'
 import { fetchProjects } from './redux/Project/Project.Action'
 import UpgradeSuccess from './pages/Subscription/UpgradeSuccess'
 import AcceptInvitation from './pages/Project/AcceptInvitation'
+import UpdateProjectForm from './pages/Project/UpdateProjectForm'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -54,7 +55,8 @@ function App() {
               path="/accept_invitation"
               element={<AcceptInvitation />}
             ></Route>
-
+   <Route path="/project/update/:id" element={<UpdateProjectForm />}></Route>
+           
       </Routes>
 
       </>
