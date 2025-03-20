@@ -83,7 +83,7 @@ public class ProjectController {
             @RequestBody Project project,
             @RequestHeader("Authorization") String token) throws UserException, ProjectException {
         User user = userService.findUserProfileByJwt(token);
-        project.setOwner(user);
+      //  project.setOwner(user);
         Project createdProject = projectService.createProject(project, user.getId());
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
