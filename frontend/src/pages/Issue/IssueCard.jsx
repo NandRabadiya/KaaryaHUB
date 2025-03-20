@@ -24,6 +24,8 @@ const IssueCard = ({ item }) => {
   const handleDelete = () => {
     dispatch(deleteIssue(item.id));
   };
+  // const handleEdit = () => {
+  // }
   return (
     <Card className="rounded-md py-1 pb-2">
       <CardHeader className="py-0 pb-1">
@@ -47,9 +49,7 @@ const IssueCard = ({ item }) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>In Progress</DropdownMenuItem>
-              <DropdownMenuItem>Done</DropdownMenuItem>
-              <DropdownMenuItem>Edit</DropdownMenuItem>
+              {/* <DropdownMenuItem>Edit</DropdownMenuItem> */}
               <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
