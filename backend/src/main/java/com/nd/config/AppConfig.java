@@ -45,6 +45,7 @@ public class AppConfig {
                         "http://localhost:4200",
                         "https://kaaryahub.vercel.app"
 
+
                 ));
 
                 cfg.setAllowedMethods(Collections.singletonList("*"));
