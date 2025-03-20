@@ -16,14 +16,22 @@ public class GlobelExeptions {
 	public ResponseEntity<ErrorDetais> userEceptionHandler(UserException ue,
 			WebRequest req){
 		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ProjectException.class)
+	public ResponseEntity<ErrorDetais> handleProjectException(ProjectException ex, WebRequest req) {
+		ErrorDetais error=new ErrorDetais(ex.getMessage(),req.getDescription(false),LocalDateTime.now());
+
+		return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+	}
+
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorDetais> otherEceptionHandler(Exception ue,
+			WebRequest req){
+		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
 		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
 	}
-	
-//	@ExceptionHandler(Exception.class)
-//	public ResponseEntity<ErrorDetais> otherEceptionHandler(Exception ue,
-//			WebRequest req){
-//		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
-//		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
-//	}
 
 }

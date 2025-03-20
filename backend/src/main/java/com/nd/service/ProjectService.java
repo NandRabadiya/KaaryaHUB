@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public interface ProjectService {
-    Project createProject(Project project, Long userId) throws UserException;
+    Project createProject(Project project, Long userId) throws UserException , ProjectException;
 
 //	List<Project> getProjectsByOwner(User owner) throws ProjectException;
 

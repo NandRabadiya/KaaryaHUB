@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.nd.domain.PlanType;
+import com.nd.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +32,22 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserService userService;
 
-    @Override
-    public Project createProject(Project project,Long id) throws UserException  {
-        User user = userService.findUserById(id);
-        Project createdProject=new Project();
 
+    @Override
+    public Project createProject(Project project, Long id) throws UserException, ProjectException {
+        User user = userService.findUserById(id);
+
+        // Get the user's subscription
+        Subscription subscription = user.getSubscription();
+
+        if (subscription != null && subscription.getPlanType() == PlanType.FREE) {
+            if (user.getProjectSize() >= 3) {
+                throw new ProjectException("Upgrade your plan to add more projects.");
+            }
+        }
+
+        // Create new project
+        Project createdProject = new Project();
         createdProject.setOwner(user);
         createdProject.setTags(project.getTags());
         createdProject.setName(project.getName());
@@ -42,20 +55,21 @@ public class ProjectServiceImpl implements ProjectService {
         createdProject.setDescription(project.getDescription());
         createdProject.getTeam().add(user);
 
-        System.out.println(createdProject);
-        Project savedProject=projectRepository.save(project);
-
+        Project savedProject = projectRepository.save(createdProject);
         savedProject.getTeam().add(user);
 
+        // Create and associate a chat for the project
         Chat chat = new Chat();
         chat.setProject(savedProject);
         Chat projectChat = chatService.createChat(chat);
         savedProject.setChat(projectChat);
 
-
+        // Increase user's project count
+        userService.updateUsersProjectSize(user, 1);
 
         return savedProject;
     }
+
 
     @Override
     public List<Project> getProjectsByTeam(User user,String category,String tag) throws ProjectException {

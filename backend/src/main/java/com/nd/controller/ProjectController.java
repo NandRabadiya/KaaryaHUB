@@ -85,7 +85,6 @@ public class ProjectController {
         User user = userService.findUserProfileByJwt(token);
         project.setOwner(user);
         Project createdProject = projectService.createProject(project, user.getId());
-        userService.updateUsersProjectSize(user,1);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
