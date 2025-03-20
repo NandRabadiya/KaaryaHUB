@@ -5,10 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Data
@@ -48,7 +45,9 @@ public class Project {
     private User owner;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true , fetch = FetchType.LAZY)
     private List<Issue> issues = new ArrayList<>();
 
 
@@ -56,13 +55,6 @@ public class Project {
     @ToString.Exclude
     private List<User> team = new ArrayList<>();
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "project_team",
-//            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
-//    )
-//    private List<User> team = new ArrayList<>();
 
 
 }
