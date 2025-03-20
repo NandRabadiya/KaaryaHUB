@@ -39,7 +39,7 @@ const ChatBox = () => {
       // Polling every 3 seconds to fetch new messages
       const intervalId = setInterval(() => {
         dispatch(fetchChatMessages(chat.chat?.id));
-      }, 3000);
+      }, 5000);
   
       // Cleanup interval when component unmounts
       return () => clearInterval(intervalId);
