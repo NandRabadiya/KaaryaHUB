@@ -55,7 +55,7 @@ const SignupForm = () => {
                   <Input
                     {...field}
                     type="text"
-                    className="border text-primary-foreground w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
+                    className="border text-blue-900 w-full rounded-md border-input py-2 px-3 shadow-sm focus:border-primary"
                     placeholder="Your full name"
                   />
                 </FormControl>
