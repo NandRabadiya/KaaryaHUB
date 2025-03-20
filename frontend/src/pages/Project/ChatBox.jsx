@@ -32,6 +32,20 @@ const ChatBox = () => {
       dispatch(fetchChatMessages(chat.chat?.id));
     }
   }, [chat.chat]);
+  useEffect(() => {
+    if (chat.chat) {
+      dispatch(fetchChatMessages(chat.chat?.id));
+  
+      // Polling every 3 seconds to fetch new messages
+      const intervalId = setInterval(() => {
+        dispatch(fetchChatMessages(chat.chat?.id));
+      }, 3000);
+  
+      // Cleanup interval when component unmounts
+      return () => clearInterval(intervalId);
+    }
+  }, [chat.chat]);
+  
 
   const handleSendMessage = () => {
     dispatch(
