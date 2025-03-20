@@ -57,7 +57,7 @@ const IssueCard = ({ item }) => {
       </CardHeader>
       <CardContent className="py-0">
         <div className="flex items-center justify-between">
-          <p>FBP - {1}</p>
+          <p>{item.description}</p>
 
           <DropdownMenu className="w-[30rem] border border-red-400">
             <DropdownMenuTrigger>
@@ -66,7 +66,7 @@ const IssueCard = ({ item }) => {
                 size="icon"
               >
                 <Avatar>
-                  <AvatarFallback className="bg-secondary">
+                  <AvatarFallback className="">
                     {item.assignee?.fullName[0].toUpperCase() || <PersonIcon />}
                   </AvatarFallback>
                 </Avatar>
